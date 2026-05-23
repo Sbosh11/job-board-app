@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import Navbar from "./components/NavBar"
+import Navbar from "./components/layout/NavBar.tsx"
 import JobListingsPage from "./pages/JobListingsPage"
 import JobDetailsPage from "./pages/JobDetailsPage.tsx"
 import JobApplicationPage from "./pages/JobApplicationPage"
