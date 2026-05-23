@@ -1,0 +1,165 @@
+{
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Senior Backend Developer",
+      "location": "Johannesburg",
+      "department": "Engineering",
+      "description": "Build scalable APIs and microservices using Node.js and cloud infrastructure.",
+      "status": "open"
+    },
+    {
+      "id": 2,
+      "title": "Frontend Developer",
+      "location": "Cape Town",
+      "department": "Engineering",
+      "description": "Develop responsive user interfaces using React and TypeScript.",
+      "status": "open"
+    },
+    {
+      "id": 3,
+      "title": "Digital Marketing Specialist",
+      "location": "Durban",
+      "department": "Marketing",
+      "description": "Manage paid campaigns, SEO, and social media performance.",
+      "status": "open"
+    },
+    {
+      "id": 4,
+      "title": "Financial Accountant",
+      "location": "Johannesburg",
+      "department": "Accounting",
+      "description": "Prepare financial statements and monthly reconciliations.",
+      "status": "open"
+    },
+    {
+      "id": 5,
+      "title": "Office Administrator",
+      "location": "Pretoria",
+      "department": "Administration",
+      "description": "Coordinate office operations, schedules, and internal communication.",
+      "status": "open"
+    },
+    {
+      "id": 6,
+      "title": "UI/UX Designer",
+      "location": "Cape Town",
+      "department": "Design",
+      "description": "Design intuitive interfaces and improve user experience flows.",
+      "status": "open"
+    },
+    {
+      "id": 7,
+      "title": "IT Support Technician",
+      "location": "Johannesburg",
+      "department": "IT",
+      "description": "Provide technical support and maintain internal systems.",
+      "status": "open"
+    },
+    {
+      "id": 8,
+      "title": "Content Marketing Coordinator",
+      "location": "Remote",
+      "department": "Marketing",
+      "description": "Create and manage digital content across multiple channels.",
+      "status": "open"
+    },
+    {
+      "id": 9,
+      "title": "Payroll Administrator",
+      "location": "Bloemfontein",
+      "department": "Accounting",
+      "description": "Process payroll and maintain employee compensation records.",
+      "status": "open"
+    },
+    {
+      "id": 10,
+      "title": "Data Analyst",
+      "location": "Johannesburg",
+      "department": "Analytics",
+      "description": "Analyze business data and generate operational insights.",
+      "status": "open"
+    },
+    {
+      "id": 11,
+      "title": "Receptionist",
+      "location": "Port Elizabeth",
+      "department": "Administration",
+      "description": "Handle front desk operations and visitor management.",
+      "status": "open"
+    },
+    {
+      "id": 12,
+      "title": "Software QA Tester",
+      "location": "Cape Town",
+      "department": "Engineering",
+      "description": "Perform software testing and report application defects.",
+      "status": "open"
+    },
+    {
+      "id": 13,
+      "title": "Social Media Manager",
+      "location": "Durban",
+      "department": "Marketing",
+      "description": "Manage social media campaigns and audience engagement.",
+      "status": "open"
+    },
+    {
+      "id": 14,
+      "title": "Accounts Payable Clerk",
+      "location": "Pretoria",
+      "department": "Accounting",
+      "description": "Manage supplier invoices and payment processing.",
+      "status": "open"
+    },
+    {
+      "id": 15,
+      "title": "HR Administrator",
+      "location": "Johannesburg",
+      "department": "Human Resources",
+      "description": "Support recruitment and employee record administration.",
+      "status": "open"
+    },
+    {
+      "id": 16,
+      "title": "Cloud Engineer",
+      "location": "Remote",
+      "department": "Engineering",
+      "description": "Maintain cloud infrastructure and deployment pipelines.",
+      "status": "open"
+    },
+    {
+      "id": 17,
+      "title": "Marketing Analyst",
+      "location": "Cape Town",
+      "department": "Marketing",
+      "description": "Track campaign performance and marketing metrics.",
+      "status": "open"
+    },
+    {
+      "id": 18,
+      "title": "Bookkeeper",
+      "location": "Johannesburg",
+      "department": "Accounting",
+      "description": "Maintain financial records and transaction reporting.",
+      "status": "open"
+    },
+    {
+      "id": 19,
+      "title": "Administrative Assistant",
+      "location": "Durban",
+      "department": "Administration",
+      "description": "Provide administrative support to multiple departments.",
+      "status": "open"
+    },
+    {
+      "id": 20,
+      "title": "Junior Full Stack Developer",
+      "location": "Cape Town",
+      "department": "Engineering",
+      "description": "Assist in developing frontend and backend web applications.",
+      "status": "open"
+    }
+  ],
+  "applications": []
+}
