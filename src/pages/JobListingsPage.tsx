@@ -6,6 +6,7 @@ import JobCard from "../components/layout/JobCard";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import PageHeader from "../components/layout/PageHeader";
 import JobSearchBar from "../components/ui/JobSearchBar";
+
 import type { JobListing } from "../types/job.types";
 import { searchJobs } from "../utils/search/searchEngine";
 
@@ -50,9 +51,9 @@ export default function JobListingsPage() {
     };
   }, []);
 
-  const filteredJobs = useMemo(() => {
-    return searchJobs(jobs, filters);
-  }, [jobs, filters]);
+const filteredJobs = useMemo(() => {
+  return searchJobs(jobs, filters);
+}, [jobs, filters]);
 
   if (loading) {
     return <LoadingSpinner />;

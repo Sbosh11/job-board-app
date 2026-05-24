@@ -1,9 +1,14 @@
-import { useState } from "react";
-import { Search, MapPin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Search, MapPin, X, Clock } from "lucide-react";
 import { toast } from "sonner";
 
 import type { JobListing } from "../../types/job.types";
-import { getSuggestions } from "../../utils/suggestions/suggestionEngine";
+
+import {
+  getKeywordSuggestions,
+  getLocationSuggestions,
+} from "../../utils/suggestions/suggestionEngine";
+
 import { getHistory, saveHistory } from "../../utils/search/history";
 
 interface JobSearchBarProps {
@@ -18,55 +23,69 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
   const [keywordSuggestions, setKeywordSuggestions] = useState<string[]>([]);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
 
-  const [showKeywordDropdown, setShowKeywordDropdown] = useState(false);
-  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [openField, setOpenField] = useState<"keyword" | "location" | null>(
+    null,
+  );
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const history = getHistory();
 
+  /* ---------------- OUTSIDE CLICK ---------------- */
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (!wrapperRef.current?.contains(e.target as Node)) {
+        setOpenField(null);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  /* ---------------- KEYWORD ---------------- */
   const handleKeywordChange = (value: string) => {
     setKeyword(value);
-
-    const results = getSuggestions(value, jobs);
-
-    setKeywordSuggestions(results);
-
-    setShowKeywordDropdown(true);
-    setShowLocationDropdown(false);
+    setKeywordSuggestions(getKeywordSuggestions(value, jobs));
+    setOpenField("keyword");
   };
 
+  /* ---------------- LOCATION ---------------- */
   const handleLocationChange = (value: string) => {
     setLocation(value);
-
-    const results = getSuggestions(value, jobs);
-
-    setLocationSuggestions(results);
-
-    setShowLocationDropdown(true);
-    setShowKeywordDropdown(false);
+    setLocationSuggestions(getLocationSuggestions(value));
+    setOpenField("location");
   };
 
+  /* ---------------- SEARCH ---------------- */
   const handleSearch = () => {
     if (!keyword.trim() && !location.trim()) {
       toast.error("Enter a job title or location to start a search");
       return;
     }
 
-    if (keyword.trim()) {
-      saveHistory(keyword);
-    }
+    if (keyword.trim()) saveHistory(keyword);
 
-    onSearch({
-      keyword,
-      location,
-    });
-
-    setShowKeywordDropdown(false);
-    setShowLocationDropdown(false);
+    onSearch({ keyword, location });
+    setOpenField(null);
   };
 
+  const clearKeyword = () => setKeyword("");
+  const clearLocation = () => setLocation("");
+
+  const showKeywordDropdown =
+    openField === "keyword" &&
+    (keywordSuggestions.length > 0 || history.length > 0);
+
+  const showLocationDropdown =
+    openField === "location" && locationSuggestions.length > 0;
+
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm md:flex-row">
-      {/* KEYWORD */}
+    <div
+      ref={wrapperRef}
+      className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm md:flex-row"
+    >
+      {/* ---------------- KEYWORD ---------------- */}
       <div className="relative flex-1">
         <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3">
           <Search className="h-5 w-5 text-slate-400" />
@@ -76,58 +95,55 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
             placeholder="Job title, skill or company"
             value={keyword}
             onChange={(e) => handleKeywordChange(e.target.value)}
-            onFocus={() => {
-              setShowKeywordDropdown(true);
-              setShowLocationDropdown(false);
-            }}
+            onFocus={() => setOpenField("keyword")}
             className="h-12 w-full bg-transparent outline-none"
           />
+
+          {keyword && (
+            <X
+              className="h-4 w-4 cursor-pointer text-slate-400 hover:text-slate-600"
+              onClick={clearKeyword}
+            />
+          )}
         </div>
 
-        {/* Keyword suggestions */}
-        {showKeywordDropdown && keywordSuggestions.length > 0 && (
-          <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+        {showKeywordDropdown && (
+          <div className="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border bg-white shadow-lg">
+            {/* suggestions */}
             {keywordSuggestions.map((item, i) => (
               <div
-                key={i}
+                key={`k-${i}`}
                 onClick={() => {
                   setKeyword(item);
-                  setShowKeywordDropdown(false);
+                  setOpenField(null);
                 }}
-                className="cursor-pointer px-4 py-3 text-sm hover:bg-slate-100"
+                className="px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
               >
                 {item}
               </div>
             ))}
-          </div>
-        )}
 
-        {/* History ONLY under keyword */}
-        {showKeywordDropdown &&
-          keywordSuggestions.length === 0 &&
-          history.length > 0 && (
-            <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-              <p className="border-b border-slate-100 px-4 py-2 text-xs font-medium text-slate-400">
-                Recent searches
-              </p>
-
-              {history.map((item, i) => (
+            {/* history */}
+            {keywordSuggestions.length === 0 &&
+              history.length > 0 &&
+              history.map((item, i) => (
                 <div
-                  key={i}
+                  key={`h-${i}`}
                   onClick={() => {
                     setKeyword(item);
-                    setShowKeywordDropdown(false);
+                    setOpenField(null);
                   }}
-                  className="cursor-pointer px-4 py-3 text-sm hover:bg-slate-100"
+                  className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
                 >
-                  {item}
+                  <Clock className="h-3.5 w-3.5 text-slate-400" />
+                  <span>{item}</span>
                 </div>
               ))}
-            </div>
-          )}
+          </div>
+        )}
       </div>
 
-      {/* LOCATION */}
+      {/* ---------------- LOCATION ---------------- */}
       <div className="relative flex-1">
         <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3">
           <MapPin className="h-5 w-5 text-slate-400" />
@@ -137,25 +153,28 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
             placeholder="City, province or remote"
             value={location}
             onChange={(e) => handleLocationChange(e.target.value)}
-            onFocus={() => {
-              setShowLocationDropdown(true);
-              setShowKeywordDropdown(false);
-            }}
+            onFocus={() => setOpenField("location")}
             className="h-12 w-full bg-transparent outline-none"
           />
+
+          {location && (
+            <X
+              className="h-4 w-4 cursor-pointer text-slate-400 hover:text-slate-600"
+              onClick={clearLocation}
+            />
+          )}
         </div>
 
-        {/* Location suggestions ONLY */}
-        {showLocationDropdown && locationSuggestions.length > 0 && (
-          <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+        {showLocationDropdown && (
+          <div className="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border bg-white shadow-lg">
             {locationSuggestions.map((item, i) => (
               <div
-                key={i}
+                key={`l-${i}`}
                 onClick={() => {
                   setLocation(item);
-                  setShowLocationDropdown(false);
+                  setOpenField(null);
                 }}
-                className="cursor-pointer px-4 py-3 text-sm hover:bg-slate-100"
+                className="px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
               >
                 {item}
               </div>
@@ -164,7 +183,7 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
         )}
       </div>
 
-      {/* BUTTON */}
+      {/* ---------------- BUTTON ---------------- */}
       <button
         onClick={handleSearch}
         className="h-12 rounded-full bg-blue-600 px-6 font-medium text-white transition hover:bg-blue-700"

@@ -1,40 +1,51 @@
 import Fuse from "fuse.js";
-import cities from "../../data/cities.json";
 import type { JobListing } from "../../types/job.types";
 
-let fuse: Fuse<string> | null = null;
-let lastKey = "";
-
-function buildIndex(jobs: JobListing[]) {
-  const jobTerms = jobs.flatMap((j) => [j.title, j.department]);
-
-  const cityTerms = cities.flatMap((c) => [c.label, ...c.aliases]);
-
-  return [...new Set([...jobTerms, ...cityTerms])];
+/* ---------------- CLEAN ---------------- */
+function clean(v: string) {
+  return v.trim().replace(/\s+/g, " ");
 }
 
-function buildFuse(index: string[]) {
-  return new Fuse(index, {
+/* ---------------- STATIC CITIES ---------------- */
+const cities = ["Pretoria", "Johannesburg", "Cape Town", "Durban", "Remote"];
+
+/* ---------------- JOB SUGGESTIONS ---------------- */
+export function getKeywordSuggestions(
+  value: string,
+  jobs: JobListing[],
+): string[] {
+  const input = value.trim().toLowerCase();
+  if (input.length < 2) return [];
+
+  const pool = Array.from(
+    new Set(jobs.flatMap((j) => [clean(j.title), clean(j.department)])),
+  );
+
+  const fuse = new Fuse(pool, {
     threshold: 0.3,
     ignoreLocation: true,
   });
+
+  const prefix = pool.filter((v) => v.toLowerCase().startsWith(input));
+
+  const fuzzy = fuse.search(input).map((r) => r.item);
+
+  return Array.from(new Set([...prefix, ...fuzzy])).slice(0, 6);
 }
 
-export function getSuggestions(value: string, jobs: JobListing[] = []) {
+/* ---------------- LOCATION SUGGESTIONS ---------------- */
+export function getLocationSuggestions(value: string): string[] {
   const input = value.trim().toLowerCase();
-  if (!input) return [];
+  if (input.length < 1) return [];
 
-  // rebuild only if needed
-  const key = jobs.length + "|cities";
+  const fuse = new Fuse(cities, {
+    threshold: 0.3,
+    ignoreLocation: true,
+  });
 
-  if (!fuse || key !== lastKey) {
-    const index = buildIndex(jobs);
-    fuse = buildFuse(index);
-    lastKey = key;
-  }
+  const prefix = cities.filter((c) => c.toLowerCase().startsWith(input));
 
-  return fuse
-    .search(input)
-    .slice(0, 6)
-    .map((r) => r.item);
+  const fuzzy = fuse.search(input).map((r) => r.item);
+
+  return Array.from(new Set([...prefix, ...fuzzy])).slice(0, 5);
 }
