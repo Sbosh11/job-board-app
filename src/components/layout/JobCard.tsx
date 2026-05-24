@@ -6,6 +6,14 @@ interface Props {
 }
 
 export default function JobCard({ job }: Props) {
+  const truncate = (text: string, max = 70) => {
+    if (text.length <= max) return text;
+
+    const trimmed = text.slice(0, max);
+    const lastSpace = trimmed.lastIndexOf(" ");
+
+    return trimmed.slice(0, lastSpace) + " ...";
+  };
   return (
     <Link to={`/jobs/${job.id}`} className="block">
       <div
@@ -45,7 +53,7 @@ export default function JobCard({ job }: Props) {
         </div>
 
         <p className="text-sm text-slate-600 mt-3 line-clamp-2">
-          {job.description}
+          {truncate(job.description)}
         </p>
 
         <Link

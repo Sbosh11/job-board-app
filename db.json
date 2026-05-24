@@ -5,160 +5,180 @@
       "title": "Senior Backend Developer",
       "location": "Johannesburg",
       "department": "Engineering",
-      "description": "Build scalable APIs and microservices using Node.js and cloud infrastructure.",
-      "status": "open"
+      "description": "Design and build scalable backend services and APIs using Node.js and modern cloud infrastructure. Work closely with frontend, product, and DevOps teams to deliver reliable, high-performance systems. Take ownership of system architecture, ensure code quality, and contribute to technical decision-making across projects.",
+      "status": "open",
+      "postedAt": "2026-05-20"
     },
     {
       "id": 2,
       "title": "Frontend Developer",
       "location": "Cape Town",
       "department": "Engineering",
-      "description": "Develop responsive user interfaces using React and TypeScript.",
-      "status": "open"
+      "description": "Develop responsive, accessible, and high-performance user interfaces using React and TypeScript. Collaborate with designers and backend developers to implement seamless user experiences. Ensure consistency across components, optimise rendering performance, and contribute to UI architecture decisions.",
+      "status": "open",
+      "postedAt": "2026-05-18"
     },
     {
       "id": 3,
       "title": "Digital Marketing Specialist",
       "location": "Durban",
       "department": "Marketing",
-      "description": "Manage paid campaigns, SEO, and social media performance.",
-      "status": "open"
+      "description": "Plan, execute, and optimise digital marketing campaigns across SEO, paid advertising, and social media channels. Analyse performance data to improve engagement, conversion rates, and ROI. Work with content and design teams to maintain consistent brand messaging across platforms.",
+      "status": "open",
+      "postedAt": "2026-05-17"
     },
     {
       "id": 4,
       "title": "Financial Accountant",
       "location": "Johannesburg",
       "department": "Accounting",
-      "description": "Prepare financial statements and monthly reconciliations.",
-      "status": "open"
+      "description": "Prepare accurate financial statements, manage monthly reconciliations, and ensure compliance with accounting standards. Support budgeting processes, audit preparation, and financial reporting. Maintain strong attention to detail while ensuring financial integrity across all records.",
+      "status": "open",
+      "postedAt": "2026-05-16"
     },
     {
       "id": 5,
       "title": "Office Administrator",
       "location": "Pretoria",
       "department": "Administration",
-      "description": "Coordinate office operations, schedules, and internal communication.",
-      "status": "open"
+      "description": "Oversee daily office operations, manage scheduling, and support internal communication across departments. Coordinate administrative processes to ensure smooth workflow and operational efficiency. Assist with documentation, reporting, and general office support tasks.",
+      "status": "open",
+      "postedAt": "2026-05-15"
     },
     {
       "id": 6,
       "title": "UI/UX Designer",
       "location": "Cape Town",
       "department": "Design",
-      "description": "Design intuitive interfaces and improve user experience flows.",
-      "status": "open"
+      "description": "Design intuitive and visually consistent user interfaces while improving overall user experience through research and iteration. Create wireframes, prototypes, and design systems. Collaborate closely with product and engineering teams to deliver user-centred solutions.",
+      "status": "open",
+      "postedAt": "2026-05-14"
     },
     {
       "id": 7,
       "title": "IT Support Technician",
       "location": "Johannesburg",
       "department": "IT",
-      "description": "Provide technical support and maintain internal systems.",
-      "status": "open"
+      "description": "Provide technical support for hardware, software, and network-related issues. Diagnose and resolve system problems efficiently while maintaining internal IT infrastructure. Ensure minimal downtime and support smooth daily operations across teams.",
+      "status": "open",
+      "postedAt": "2026-05-13"
     },
     {
       "id": 8,
       "title": "Content Marketing Coordinator",
       "location": "Remote",
       "department": "Marketing",
-      "description": "Create and manage digital content across multiple channels.",
-      "status": "open"
+      "description": "Create, manage, and distribute engaging content across digital platforms. Support brand consistency through well-structured content strategies. Collaborate with marketing and design teams to improve reach, engagement, and audience growth.",
+      "status": "open",
+      "postedAt": "2026-05-12"
     },
     {
       "id": 9,
       "title": "Payroll Administrator",
       "location": "Bloemfontein",
       "department": "Accounting",
-      "description": "Process payroll and maintain employee compensation records.",
-      "status": "open"
+      "description": "Process payroll accurately and on schedule while maintaining employee compensation records. Ensure compliance with relevant regulations and internal policies. Support reporting and reconciliation of payroll data.",
+      "status": "open",
+      "postedAt": "2026-05-11"
     },
     {
       "id": 10,
       "title": "Data Analyst",
       "location": "Johannesburg",
       "department": "Analytics",
-      "description": "Analyze business data and generate operational insights.",
-      "status": "open"
+      "description": "Analyse large datasets to identify trends, patterns, and actionable insights. Build reports and dashboards that support strategic decision-making. Work closely with business teams to translate data into meaningful recommendations.",
+      "status": "open",
+      "postedAt": "2026-05-10"
     },
     {
       "id": 11,
       "title": "Receptionist",
       "location": "Port Elizabeth",
       "department": "Administration",
-      "description": "Handle front desk operations and visitor management.",
-      "status": "open"
+      "description": "Manage front desk operations, greet visitors, and handle incoming communication professionally. Provide administrative support to ensure smooth office functioning. Maintain organised records and assist with general office coordination.",
+      "status": "open",
+      "postedAt": "2026-05-09"
     },
     {
       "id": 12,
       "title": "Software QA Tester",
       "location": "Cape Town",
       "department": "Engineering",
-      "description": "Perform software testing and report application defects.",
-      "status": "open"
+      "description": "Design and execute test cases to identify software defects and ensure product quality. Work closely with developers to reproduce issues and validate fixes. Maintain testing documentation and support continuous delivery processes.",
+      "status": "open",
+      "postedAt": "2026-05-08"
     },
     {
       "id": 13,
       "title": "Social Media Manager",
       "location": "Durban",
       "department": "Marketing",
-      "description": "Manage social media campaigns and audience engagement.",
-      "status": "open"
+      "description": "Develop and manage social media strategies across multiple platforms. Create engaging content, monitor performance metrics, and optimise campaigns for growth and engagement. Maintain consistent brand presence online.",
+      "status": "open",
+      "postedAt": "2026-05-07"
     },
     {
       "id": 14,
       "title": "Accounts Payable Clerk",
       "location": "Pretoria",
       "department": "Accounting",
-      "description": "Manage supplier invoices and payment processing.",
-      "status": "open"
+      "description": "Process supplier invoices and manage payment cycles accurately. Ensure financial records are up to date and compliant with internal policies. Support reconciliation and reporting within accounts payable functions.",
+      "status": "open",
+      "postedAt": "2026-05-06"
     },
     {
       "id": 15,
       "title": "HR Administrator",
       "location": "Johannesburg",
       "department": "Human Resources",
-      "description": "Support recruitment and employee record administration.",
-      "status": "open"
+      "description": "Support HR operations including recruitment, onboarding, and employee record management. Assist with administrative HR processes and ensure accurate documentation. Contribute to smooth workforce coordination.",
+      "status": "open",
+      "postedAt": "2026-05-05"
     },
     {
       "id": 16,
       "title": "Cloud Engineer",
       "location": "Remote",
       "department": "Engineering",
-      "description": "Maintain cloud infrastructure and deployment pipelines.",
-      "status": "open"
+      "description": "Design, deploy, and maintain cloud infrastructure and CI/CD pipelines. Ensure systems are scalable, secure, and highly available. Collaborate with engineering teams to improve deployment efficiency and system reliability.",
+      "status": "open",
+      "postedAt": "2026-05-04"
     },
     {
       "id": 17,
       "title": "Marketing Analyst",
       "location": "Cape Town",
       "department": "Marketing",
-      "description": "Track campaign performance and marketing metrics.",
-      "status": "open"
+      "description": "Analyse marketing performance data to evaluate campaign effectiveness. Identify trends and provide actionable insights to improve marketing strategy. Support data-driven decision-making across marketing initiatives.",
+      "status": "open",
+      "postedAt": "2026-05-03"
     },
     {
       "id": 18,
       "title": "Bookkeeper",
       "location": "Johannesburg",
       "department": "Accounting",
-      "description": "Maintain financial records and transaction reporting.",
-      "status": "open"
+      "description": "Maintain accurate financial records and process daily transactions. Support reporting, reconciliations, and financial documentation. Ensure consistency and accuracy across bookkeeping processes.",
+      "status": "open",
+      "postedAt": "2026-05-02"
     },
     {
       "id": 19,
       "title": "Administrative Assistant",
       "location": "Durban",
       "department": "Administration",
-      "description": "Provide administrative support to multiple departments.",
-      "status": "open"
+      "description": "Provide administrative and organisational support across departments. Manage scheduling, documentation, and internal coordination tasks. Ensure efficient office operations and communication flow.",
+      "status": "open",
+      "postedAt": "2026-05-01"
     },
     {
       "id": 20,
       "title": "Junior Full Stack Developer",
       "location": "Cape Town",
       "department": "Engineering",
-      "description": "Assist in developing frontend and backend web applications.",
-      "status": "open"
+      "description": "Support the development of web applications across frontend and backend systems. Work with senior developers to implement features, fix bugs, and improve application performance. Gain exposure to production systems and modern development practices.",
+      "status": "open",
+      "postedAt": "2026-04-30"
     }
   ],
   "applications": []
