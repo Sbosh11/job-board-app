@@ -28,7 +28,7 @@ export default function JobDetailsPage() {
 
         <Link
           to={`/jobs/${job.id}/apply`}
-          className="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg"
+          className="h-12 rounded-full bg-blue-600 px-6 font-medium text-white transition hover:bg-blue-700 inline-flex items-center gap-2 mt-4"
         >
           Apply Now
         </Link>

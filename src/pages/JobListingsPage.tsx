@@ -1,15 +1,23 @@
-import { useMemo, useEffect, useState } from "react";
-import type { JobListing } from "../types/job.types";
+import { useEffect, useMemo, useState } from "react";
+
 import { fetchJobs } from "../api/jobs.api";
 
 import JobCard from "../components/layout/JobCard";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import PageHeader from "../components/layout/PageHeader";
+import JobSearchBar from "../components/ui/JobSearchBar";
+import type { JobListing } from "../types/job.types";
+import { searchJobs } from "../utils/search/searchEngine";
 
 export default function JobListingsPage() {
   const [jobs, setJobs] = useState<JobListing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
+
+  const [filters, setFilters] = useState({
+    keyword: "",
+    location: "",
+  });
 
   useEffect(() => {
     let active = true;
@@ -21,11 +29,17 @@ export default function JobListingsPage() {
 
         const data = await fetchJobs();
 
-        if (active) setJobs(data);
+        if (active) {
+          setJobs(data);
+        }
       } catch {
-        if (active) setError("Failed to load jobs");
+        if (active) {
+          setError("Failed to load jobs");
+        }
       } finally {
-        if (active) setLoading(false);
+        if (active) {
+          setLoading(false);
+        }
       }
     };
 
@@ -37,37 +51,32 @@ export default function JobListingsPage() {
   }, []);
 
   const filteredJobs = useMemo(() => {
-    const q = search.toLowerCase();
+    return searchJobs(jobs, filters);
+  }, [jobs, filters]);
 
-    return jobs.filter(
-      (job) =>
-        job.title.toLowerCase().includes(q) ||
-        job.department.toLowerCase().includes(q) ||
-        job.location.toLowerCase().includes(q)
-    );
-  }, [jobs, search]);
-
-  if (loading) return <LoadingSpinner />;
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   if (error) {
     return <p className="text-red-600">{error}</p>;
   }
 
   return (
-    <div className="space-y-4">
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search jobs..."
-        className="w-full px-4 py-2 border rounded-xl border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+    <div className="space-y-6">
+      <div className="space-y-4">
+        <PageHeader
+          title="Find Your Next Job"
+          subtitle="Search by role, company or location"
+        />
+
+        <JobSearchBar onSearch={setFilters} jobs={jobs} />
+      </div>
 
       {filteredJobs.length === 0 ? (
         <p className="text-slate-500">No jobs found</p>
       ) : (
-        filteredJobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))
+        filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
       )}
     </div>
   );

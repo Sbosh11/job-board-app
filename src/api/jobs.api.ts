@@ -1,8 +1,10 @@
 import { api } from "./client";
-import type { JobListing } from "../types/job.types";
+import type { JobListing, JobSearchParams } from "../types/job.types";
 
-export async function fetchJobs(): Promise<JobListing[]> {
-  const res = await api.get("/jobs");
+export async function fetchJobs(
+  params?: JobSearchParams,
+): Promise<JobListing[]> {
+  const res = await api.get("/jobs", { params });
   return res.data;
 }
 
