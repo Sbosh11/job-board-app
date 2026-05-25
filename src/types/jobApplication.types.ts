@@ -1,6 +1,6 @@
 // Purpose: Types for job application payloads.
 export type JobApplication = {
-  id?: string; // 👈 Make sure this allows a string
+  id?: string;
   jobId: number;
   fullName: string;
   email: string;

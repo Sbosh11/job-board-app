@@ -58,6 +58,22 @@ body {
     sans-serif;
 }
 
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px #f8fafc inset !important;
+  background-color: #f8fafc !important;
+  color: inherit !important;
+}
+
+input:-moz-autofill,
+textarea:-moz-autofill,
+select:-moz-autofill {
+  box-shadow: 0 0 0px 1000px #f8fafc inset !important;
+  background-color: #f8fafc !important;
+  color: inherit !important;
+}
+
 /*
   --text: #6b6375;
   --text-h: #08060d;

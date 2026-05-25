@@ -10,17 +10,12 @@ export function createFormSubmit<T>(
     errorMessage?: string;
   },
 ) {
-  return async (data: T): Promise<boolean> => {
-    try {
-      await fn(data);
-
-      toast.success(options?.successMessage || "Success");
-
-      return true;
-    } catch {
-      toast.error(options?.errorMessage || "Something went wrong");
-
-      return false;
-    }
+  return async (data: T): Promise<unknown> => {
+    // Automatically handles loading, success, and error toast states while letting errors bubble up properly.
+    return toast.promise(fn(data), {
+      loading: "Submitting...",
+      success: options?.successMessage || "Success",
+      error: options?.errorMessage || "Something went wrong",
+    });
   };
 }

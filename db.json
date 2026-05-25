@@ -183,37 +183,12 @@
   ],
   "applications": [
     {
+      "jobId": 1,
       "fullName": "Sibongile Thanjekwayo",
       "email": "sbosh11@gmail.com",
       "phone": "0846327378",
-      "coverLetter": null,
-      "jobId": 1,
-      "id": "cJ9ENnnzmHI"
-    },
-    {
-      "fullName": "Sibongile Thanjekwayo",
-      "email": "sbosh11@gmail.com",
-      "phone": "0846327378",
-      "coverLetter": null,
-      "jobId": 1,
-      "id": "Ou7JvA8FRIE"
-    },
-    {
-      "fullName": "Sibongile Thanjekwayo 2",
-      "email": "sbosh11@gmail.com",
-      "phone": "0846327378",
-      "coverLetter": "",
-      "jobId": 1,
-      "id": "pI6KNRsbapw"
-    },
-    {
-      "fullName": "sibo",
-      "email": "t@test.com",
-      "phone": "",
-      "coverLetter": "",
-      "jobId": 1,
-      "id": "AyDXRDyidAM"
+      "coverLetter": "I am applying for this role because it aligns with my experience in web development and building modern user interfaces. I have worked with React to create responsive, component-based applications, integrate APIs, and manage state effectively. I focus on writing clean, maintainable code and delivering smooth user experiences. I am keen to contribute to a team where I can apply my skills and continue improving in real-world projects.",
+      "id": "AHWUqLsSRH8"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
