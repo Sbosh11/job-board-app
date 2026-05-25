@@ -36,7 +36,7 @@ A modern job board application built with React, TypeScript, Vite, and a mock RE
 
 ## Project Structure
 
-````txt
+```txt
 src/
   components/
   pages/
@@ -45,7 +45,7 @@ src/
   utils/
   types/
 db.json   # mock API data
-
+```
 
 ## Setup, Installation & Running the Project
 
@@ -53,20 +53,21 @@ db.json   # mock API data
 
 - Node.js (v18+ recommended)
 - npm (or yarn / pnpm)
-  **Install**
 
+**Install**
 
 Clone Repository:
 
+```bash
 git clone <repo-url>
-cd next-hire
-
+cd job-board-app
+```
 
 Install dependencies:
 
 ```bash
 npm install
-````
+```
 
 **Development**
 
