@@ -38,12 +38,14 @@ A modern job board application built with React, TypeScript, Vite, and a mock RE
 
 ```txt
 src/
-  components/
-  pages/
-  hooks/
   api/
+  components/
+  data/
+  hooks/
+  pages/
+  providers/
+ types/
   utils/
-  types/
 db.json   # mock API data
 ```
 
