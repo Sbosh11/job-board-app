@@ -61,7 +61,7 @@ db.json   # mock API data
 Clone Repository:
 
 ```bash
-git clone <repo-url>
+git clone <https://github.com/Sbosh11/job-board-app>
 cd job-board-app
 ```
 
