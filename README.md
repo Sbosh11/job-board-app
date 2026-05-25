@@ -40,12 +40,14 @@ Live demo: https://job-board-app-sand.vercel.app/
 
 ```txt
 src/
-  components/
-  pages/
-  hooks/
   api/
-  utils/
+  components/
+  data/
+  hooks/
+  pages/
+  providers/
   types/
+  utils/
 db.json   # mock API data
 ```
 
