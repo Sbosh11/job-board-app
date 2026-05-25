@@ -61,8 +61,11 @@ db.json   # mock API data
 Clone Repository:
 
 ```bash
-git clone <repo-url>
-cd next-hire
+git clone https://github.com/Sbosh11/job-board-app
+```
+
+```bash
+cd job-board-app
 ```
 
 Install dependencies:
