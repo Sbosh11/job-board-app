@@ -1,3 +1,4 @@
+// Purpose: Hook to fetch a single job by id.
 import { useQuery } from "@tanstack/react-query";
 import type { JobListing } from "../types/job.types";
 import { fetchJobById } from "../api/jobs.api";

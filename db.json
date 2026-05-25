@@ -1,7 +1,7 @@
 {
   "jobs": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Senior Backend Developer",
       "location": "Johannesburg",
       "department": "Engineering",
@@ -10,7 +10,7 @@
       "postedAt": "2026-05-20"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Frontend Developer",
       "location": "Cape Town",
       "department": "Engineering",
@@ -19,7 +19,7 @@
       "postedAt": "2026-05-18"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Digital Marketing Specialist",
       "location": "Durban",
       "department": "Marketing",
@@ -28,7 +28,7 @@
       "postedAt": "2026-05-17"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Financial Accountant",
       "location": "Johannesburg",
       "department": "Accounting",
@@ -37,7 +37,7 @@
       "postedAt": "2026-05-16"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Office Administrator",
       "location": "Pretoria",
       "department": "Administration",
@@ -46,7 +46,7 @@
       "postedAt": "2026-05-15"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "UI/UX Designer",
       "location": "Cape Town",
       "department": "Design",
@@ -55,7 +55,7 @@
       "postedAt": "2026-05-14"
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "IT Support Technician",
       "location": "Johannesburg",
       "department": "IT",
@@ -64,7 +64,7 @@
       "postedAt": "2026-05-13"
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "Content Marketing Coordinator",
       "location": "Remote",
       "department": "Marketing",
@@ -73,7 +73,7 @@
       "postedAt": "2026-05-12"
     },
     {
-      "id": 9,
+      "id": "9",
       "title": "Payroll Administrator",
       "location": "Bloemfontein",
       "department": "Accounting",
@@ -82,7 +82,7 @@
       "postedAt": "2026-05-11"
     },
     {
-      "id": 10,
+      "id": "10",
       "title": "Data Analyst",
       "location": "Johannesburg",
       "department": "Analytics",
@@ -91,7 +91,7 @@
       "postedAt": "2026-05-10"
     },
     {
-      "id": 11,
+      "id": "11",
       "title": "Receptionist",
       "location": "Port Elizabeth",
       "department": "Administration",
@@ -100,7 +100,7 @@
       "postedAt": "2026-05-09"
     },
     {
-      "id": 12,
+      "id": "12",
       "title": "Software QA Tester",
       "location": "Cape Town",
       "department": "Engineering",
@@ -109,7 +109,7 @@
       "postedAt": "2026-05-08"
     },
     {
-      "id": 13,
+      "id": "13",
       "title": "Social Media Manager",
       "location": "Durban",
       "department": "Marketing",
@@ -118,7 +118,7 @@
       "postedAt": "2026-05-07"
     },
     {
-      "id": 14,
+      "id": "14",
       "title": "Accounts Payable Clerk",
       "location": "Pretoria",
       "department": "Accounting",
@@ -127,7 +127,7 @@
       "postedAt": "2026-05-06"
     },
     {
-      "id": 15,
+      "id": "15",
       "title": "HR Administrator",
       "location": "Johannesburg",
       "department": "Human Resources",
@@ -136,7 +136,7 @@
       "postedAt": "2026-05-05"
     },
     {
-      "id": 16,
+      "id": "16",
       "title": "Cloud Engineer",
       "location": "Remote",
       "department": "Engineering",
@@ -145,7 +145,7 @@
       "postedAt": "2026-05-04"
     },
     {
-      "id": 17,
+      "id": "17",
       "title": "Marketing Analyst",
       "location": "Cape Town",
       "department": "Marketing",
@@ -154,7 +154,7 @@
       "postedAt": "2026-05-03"
     },
     {
-      "id": 18,
+      "id": "18",
       "title": "Bookkeeper",
       "location": "Johannesburg",
       "department": "Accounting",
@@ -163,7 +163,7 @@
       "postedAt": "2026-05-02"
     },
     {
-      "id": 19,
+      "id": "19",
       "title": "Administrative Assistant",
       "location": "Durban",
       "department": "Administration",
@@ -172,7 +172,7 @@
       "postedAt": "2026-05-01"
     },
     {
-      "id": 20,
+      "id": "20",
       "title": "Junior Full Stack Developer",
       "location": "Cape Town",
       "department": "Engineering",
@@ -181,5 +181,39 @@
       "postedAt": "2026-04-30"
     }
   ],
-  "applications": []
+  "applications": [
+    {
+      "fullName": "Sibongile Thanjekwayo",
+      "email": "sbosh11@gmail.com",
+      "phone": "0846327378",
+      "coverLetter": null,
+      "jobId": 1,
+      "id": "cJ9ENnnzmHI"
+    },
+    {
+      "fullName": "Sibongile Thanjekwayo",
+      "email": "sbosh11@gmail.com",
+      "phone": "0846327378",
+      "coverLetter": null,
+      "jobId": 1,
+      "id": "Ou7JvA8FRIE"
+    },
+    {
+      "fullName": "Sibongile Thanjekwayo 2",
+      "email": "sbosh11@gmail.com",
+      "phone": "0846327378",
+      "coverLetter": "",
+      "jobId": 1,
+      "id": "pI6KNRsbapw"
+    },
+    {
+      "fullName": "sibo",
+      "email": "t@test.com",
+      "phone": "",
+      "coverLetter": "",
+      "jobId": 1,
+      "id": "AyDXRDyidAM"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -1,12 +1,18 @@
-import { useParams, Link } from "react-router-dom";
+// Purpose: Page that shows details for a single job.
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useJob } from "../hooks/useJob";
+import JobSearchBar from "../components/ui/JobSearchBar";
+import { useJobs } from "../hooks/useJobs";
 
 export default function JobDetailsPage() {
   const { id } = useParams<{ id: string }>();
+
+  const navigate = useNavigate();
+  const { data: jobsData = [] } = useJobs();
 
   const { data: job, isLoading, isError, error } = useJob(id);
 
@@ -19,7 +25,11 @@ export default function JobDetailsPage() {
   if (isLoading) return <LoadingSpinner />;
 
   if (isError) {
-    return <p className="text-red-600">{error?.message}</p>;
+    return (
+      <p role="alert" className="text-error">
+        {error?.message}
+      </p>
+    );
   }
 
   if (!job) {
@@ -28,6 +38,16 @@ export default function JobDetailsPage() {
 
   return (
     <div className="space-y-6">
+      <JobSearchBar
+        jobs={jobsData}
+        onSearch={(p) => {
+          const params = new URLSearchParams();
+          if (p.keyword) params.set("keyword", p.keyword);
+          if (p.location) params.set("location", p.location);
+
+          navigate(`/?${params.toString()}`);
+        }}
+      />
       {/* HEADER CARD */}
       <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all border border-transparent hover:border-slate-100">
         <h1 className="text-2xl font-bold">{job.title}</h1>

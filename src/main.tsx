@@ -1,3 +1,4 @@
+// Purpose: App entry point; mount React application.
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "sonner";
@@ -9,19 +10,20 @@ import { queryClient } from "./providers/queryClient";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    <App />
-    <Toaster
-      position="top-center"
-      toastOptions={{
-        style: {
-          background: "#ffffff",
-          color: "#1e293b",
-          border: "1px solid #e2e8f0",
-          fontWeight: "100",
-        },
-        className: "shadow-lg rounded-xl",
-      }}
-    />
+      <App />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 8000,
+          style: {
+            background: "#ffffff",
+            color: "var(--success-text)",
+            border: "1px solid #e2e8f0",
+            fontWeight: "100",
+          },
+          className: "shadow-lg rounded-xl",
+        }}
+      />
     </QueryClientProvider>
-  </StrictMode>
+  </StrictMode>,
 );

@@ -1,3 +1,4 @@
+// Purpose: Types describing job listing shape and search params.
 export type JobStatus = "open" | "closed";
 
 export interface JobListing {

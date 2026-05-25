@@ -1,3 +1,4 @@
+// Purpose: API helpers for fetching job data.
 import { api } from "./client";
 import type { JobListing, JobSearchParams } from "../types/job.types";
 

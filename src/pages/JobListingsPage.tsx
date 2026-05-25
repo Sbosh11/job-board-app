@@ -1,3 +1,4 @@
+// Purpose: Page that fetches and displays a list of job postings.
 import { useEffect, useMemo, useState } from "react";
 
 import { fetchJobs } from "../api/jobs.api";
@@ -10,14 +11,18 @@ import JobSearchBar from "../components/ui/JobSearchBar";
 import type { JobListing } from "../types/job.types";
 import { searchJobs } from "../utils/search/searchEngine";
 
+import JobFiltersSideBar from "../components/ui/JobFiltersSideBar";
+
 export default function JobListingsPage() {
   const [jobs, setJobs] = useState<JobListing[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const [filters, setFilters] = useState({
     keyword: "",
-    location: "",
+    location: [] as string[],
+    department: [] as string[],
+    sort: "newest" as "newest" | "relevance",
   });
 
   useEffect(() => {
@@ -51,34 +56,81 @@ export default function JobListingsPage() {
     };
   }, []);
 
-const filteredJobs = useMemo(() => {
-  return searchJobs(jobs, filters);
-}, [jobs, filters]);
+  const filteredJobs = useMemo(() => {
+    return searchJobs(jobs, filters);
+  }, [jobs, filters]);
 
-  if (loading) {
-    return <LoadingSpinner />;
+  function setFilter(key: string, value: string) {
+    setFilters((prev) => {
+      const k = key as "location" | "department";
+      const current = prev[k];
+
+      const exists = current.includes(value);
+
+      return {
+        ...prev,
+        [k]: exists ? current.filter((v) => v !== value) : [...current, value],
+      };
+    });
   }
 
-  if (error) {
-    return <p className="text-red-600">{error}</p>;
+  function reset() {
+    setFilters({
+      keyword: "",
+      location: [],
+      department: [],
+      sort: "newest",
+    });
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-7xl mx-auto px-4">
+      {/* HEADER */}
       <div className="space-y-4">
         <PageHeader
           title="Find Your Next Job"
-          subtitle="Search by role, company or location"
+          subtitle="Search by role or location"
         />
 
-        <JobSearchBar onSearch={setFilters} jobs={jobs} />
+        <JobSearchBar
+          jobs={jobs}
+          onSearch={(p) =>
+            setFilters((prev) => ({
+              ...prev,
+              keyword: p.keyword,
+              location: p.location ? [p.location] : [],
+            }))
+          }
+        />
       </div>
 
-      {filteredJobs.length === 0 ? (
-        <p className="text-slate-500">No jobs found</p>
-      ) : (
-        filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
-      )}
+      {/* MAIN LAYOUT */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* SIDEBAR */}
+        <aside className="lg:col-span-3">
+          <JobFiltersSideBar
+            jobs={jobs}
+            filters={filters}
+            setFilter={setFilter}
+            reset={reset}
+          />
+        </aside>
+
+        {/* LIST */}
+        <main className="lg:col-span-9 space-y-4">
+          {loading ? (
+            <LoadingSpinner />
+          ) : error ? (
+            <p role="alert" className="text-error">
+              {error}
+            </p>
+          ) : filteredJobs.length === 0 ? (
+            <p className="text-slate-500">No jobs found</p>
+          ) : (
+            filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
+          )}
+        </main>
+      </div>
     </div>
   );
 }

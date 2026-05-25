@@ -1,3 +1,4 @@
+// Purpose: Search inputs with suggestion dropdowns for jobs.
 import { useEffect, useRef, useState } from "react";
 import { Search, MapPin, X, Clock } from "lucide-react";
 import { toast } from "sonner";
@@ -87,12 +88,20 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
     >
       {/* ---------------- KEYWORD ---------------- */}
       <div className="relative flex-1">
-        <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3">
-          <Search className="h-5 w-5 text-slate-400" />
+        <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3 transition focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20">
+          <Search className="h-5 w-5 text-slate-400" aria-hidden="true" />
 
+          <label htmlFor="keyword-search" className="sr-only">
+            Job title
+          </label>
           <input
+            id="keyword-search"
+            name="keyword"
             type="text"
-            placeholder="Job title, skill or company"
+            placeholder="Job title"
+            aria-label="Job title"
+            aria-expanded={showKeywordDropdown}
+            aria-controls="keyword-dropdown"
             value={keyword}
             onChange={(e) => handleKeywordChange(e.target.value)}
             onFocus={() => setOpenField("keyword")}
@@ -100,44 +109,59 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
           />
 
           {keyword && (
-            <X
-              className="h-4 w-4 cursor-pointer text-slate-400 hover:text-slate-600"
+            <button
+              type="button"
               onClick={clearKeyword}
-            />
+              aria-label="Clear keyword"
+              className="cursor-pointer"
+            >
+              <X className="h-4 w-4 text-slate-400 hover:text-slate-600" />
+            </button>
           )}
         </div>
 
         {showKeywordDropdown && (
-          <div className="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border bg-white shadow-lg">
+          <div
+            id="keyword-dropdown"
+            role="listbox"
+            aria-label="Keyword suggestions"
+            className="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl bg-white shadow-dropdown py-5"
+          >
             {/* suggestions */}
             {keywordSuggestions.map((item, i) => (
-              <div
+              <button
                 key={`k-${i}`}
+                type="button"
+                role="option"
                 onClick={() => {
                   setKeyword(item);
                   setOpenField(null);
                 }}
-                className="px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
+                className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
               >
                 {item}
-              </div>
+              </button>
             ))}
 
             {/* history */}
             {keywordSuggestions.length === 0 &&
               history.length > 0 &&
               history.map((item, i) => (
-                <div
+                <button
                   key={`h-${i}`}
+                  type="button"
                   onClick={() => {
                     setKeyword(item);
                     setOpenField(null);
                   }}
-                  className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
+                  className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
                 >
-                  <Clock className="h-3.5 w-3.5 text-slate-400" />
+                  <Clock
+                    className="h-3.5 w-3.5 text-slate-400"
+                    aria-hidden="true"
+                  />
                   <span>{item}</span>
-                </div>
+                </button>
               ))}
           </div>
         )}
@@ -145,12 +169,20 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
 
       {/* ---------------- LOCATION ---------------- */}
       <div className="relative flex-1">
-        <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3">
-          <MapPin className="h-5 w-5 text-slate-400" />
+        <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3 transition focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20">
+          <MapPin className="h-5 w-5 text-slate-400" aria-hidden="true" />
 
+          <label htmlFor="location-search" className="sr-only">
+            City or remote
+          </label>
           <input
+            id="location-search"
+            name="location"
             type="text"
-            placeholder="City, province or remote"
+            placeholder="City or remote"
+            aria-label="City or remote"
+            aria-expanded={showLocationDropdown}
+            aria-controls="location-dropdown"
             value={location}
             onChange={(e) => handleLocationChange(e.target.value)}
             onFocus={() => setOpenField("location")}
@@ -158,26 +190,37 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
           />
 
           {location && (
-            <X
-              className="h-4 w-4 cursor-pointer text-slate-400 hover:text-slate-600"
+            <button
+              type="button"
               onClick={clearLocation}
-            />
+              aria-label="Clear location"
+              className="cursor-pointer"
+            >
+              <X className="h-4 w-4 text-slate-400 hover:text-slate-600" />
+            </button>
           )}
         </div>
 
         {showLocationDropdown && (
-          <div className="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border bg-white shadow-lg">
+          <div
+            id="location-dropdown"
+            role="listbox"
+            aria-label="Location suggestions"
+            className="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl bg-white shadow-dropdown py-5"
+          >
             {locationSuggestions.map((item, i) => (
-              <div
+              <button
                 key={`l-${i}`}
+                type="button"
+                role="option"
                 onClick={() => {
                   setLocation(item);
                   setOpenField(null);
                 }}
-                className="px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
+                className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
               >
                 {item}
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -185,8 +228,9 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
 
       {/* ---------------- BUTTON ---------------- */}
       <button
+        type="button"
         onClick={handleSearch}
-        className="h-12 rounded-full bg-blue-600 px-6 font-medium text-white transition hover:bg-blue-700"
+        className="cursor-pointer h-12 rounded-full bg-blue-600 px-6 font-medium text-white transition hover:bg-blue-700"
       >
         Find Jobs
       </button>

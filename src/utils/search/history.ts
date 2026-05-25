@@ -1,3 +1,4 @@
+// Purpose: Manage recent job search history in localStorage.
 const KEY = "job_search_history";
 
 export function getHistory(): string[] {

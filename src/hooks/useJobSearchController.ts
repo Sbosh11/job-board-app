@@ -1,3 +1,4 @@
+// Purpose: Manage search input state and suggestion interactions.
 import { useMemo, useState } from "react";
 import type { JobListing } from "../types/job.types";
 
@@ -9,11 +10,18 @@ import {
 import { resolveLocation } from "../utils/search/normalizeLocation";
 import { saveHistory } from "../utils/search/history";
 
+type SearchPayload = {
+  keyword: string;
+  location: string;
+};
+
 export function useJobSearchController(jobs: JobListing[]) {
   const [keyword, setKeyword] = useState("");
   const [location, setLocation] = useState("");
 
-  const [activeField, setActiveField] = useState<"keyword" | "location">("keyword");
+  const [activeField, setActiveField] = useState<"keyword" | "location">(
+    "keyword",
+  );
 
   const [open, setOpen] = useState(false);
 
@@ -50,7 +58,7 @@ export function useJobSearchController(jobs: JobListing[]) {
     setOpen(false);
   }
 
-  function search(onSearch: (p: any) => void) {
+  function search(onSearch: (p: SearchPayload) => void) {
     const payload = {
       keyword: keyword.trim(),
       location: resolveLocation(location),

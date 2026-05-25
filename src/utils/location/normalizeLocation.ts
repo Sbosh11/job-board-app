@@ -1,3 +1,4 @@
+// Purpose: Map alias strings to canonical city names.
 import { CITY_ALIASES } from "../constants/cityAliases";
 
 export function normalizeLocation(value: string) {

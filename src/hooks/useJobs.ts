@@ -1,3 +1,4 @@
+// Purpose: Hook to fetch job listings.
 import { useQuery } from "@tanstack/react-query";
 import type { JobListing, JobSearchParams } from "../types/job.types";
 import { fetchJobs } from "../api/jobs.api";

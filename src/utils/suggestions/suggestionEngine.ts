@@ -1,3 +1,4 @@
+// Purpose: Provide job keyword and location suggestions.
 import Fuse from "fuse.js";
 import type { JobListing } from "../../types/job.types";
 

@@ -1,3 +1,4 @@
+// Purpose: Normalize location labels against known city list.
 import cities from "../../data/cities.json";
 
 export function resolveLocation(input: string) {

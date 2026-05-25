@@ -1,3 +1,4 @@
+// Purpose: Compact job summary card used in listings.
 import { Link } from "react-router-dom";
 import type { JobListing } from "../../types/job.types";
 
@@ -30,9 +31,7 @@ export default function JobCard({ job }: Props) {
       >
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">
-              {job.title}
-            </h2>
+            <h2 className="text-lg font-semibold text-brand">{job.title}</h2>
 
             <p className="text-sm text-slate-500 mt-1">
               {job.location} • {job.department}
