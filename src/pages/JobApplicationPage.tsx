@@ -73,7 +73,12 @@ export default function JobApplicationPage() {
   if (isSuccessState) {
     return (
       <div className="space-y-6">
-        <JobSearchBar jobs={jobsData} onSearch={handleSearch} />
+        <JobSearchBar
+          jobs={jobsData}
+          keywordValue=""
+          locationValue=""
+          onSearch={handleSearch}
+        />
 
         <div className="max-w-2xl mx-auto">
           <div
@@ -131,7 +136,12 @@ export default function JobApplicationPage() {
   // FORM VIEW
   return (
     <div className="space-y-6">
-      <JobSearchBar jobs={jobsData} onSearch={handleSearch} />
+      <JobSearchBar
+        jobs={jobsData}
+        keywordValue=""
+        locationValue=""
+        onSearch={handleSearch}
+      />
 
       <form
         onSubmit={handleSubmit(submitHandler)}

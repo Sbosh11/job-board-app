@@ -40,6 +40,8 @@ export default function JobDetailsPage() {
     <div className="space-y-6">
       <JobSearchBar
         jobs={jobsData}
+        keywordValue=""
+        locationValue=""  
         onSearch={(p) => {
           const params = new URLSearchParams();
           if (p.keyword) params.set("keyword", p.keyword);
