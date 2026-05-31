@@ -36,7 +36,6 @@ export default function JobSearchBar({
   );
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-
   const history = getHistory();
 
   /* ---------------- OUTSIDE CLICK ---------------- */
@@ -78,8 +77,15 @@ export default function JobSearchBar({
     setOpenField(null);
   };
 
-  const clearKeyword = () => setKeyword("");
-  const clearLocation = () => setLocation("");
+  const clearKeyword = () => {
+    setKeyword("");
+    onSearch({ keyword: "", location });
+  };
+
+  const clearLocation = () => {
+    setLocation("");
+    onSearch({ keyword, location: "" });
+  };
 
   const showKeywordDropdown =
     openField === "keyword" &&
@@ -142,6 +148,7 @@ export default function JobSearchBar({
                 role="option"
                 onClick={() => {
                   setKeyword(item);
+                  onSearch({ keyword: item, location });
                   setOpenField(null);
                 }}
                 className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
@@ -159,6 +166,7 @@ export default function JobSearchBar({
                   type="button"
                   onClick={() => {
                     setKeyword(item);
+                    onSearch({ keyword: item, location });
                     setOpenField(null);
                   }}
                   className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"
@@ -222,6 +230,7 @@ export default function JobSearchBar({
                 role="option"
                 onClick={() => {
                   setLocation(item);
+                  onSearch({ keyword, location: item });
                   setOpenField(null);
                 }}
                 className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 cursor-pointer"

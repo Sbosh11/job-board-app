@@ -1,5 +1,6 @@
 // Purpose: Page that fetches and displays a list of job postings.
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { fetchJobs } from "../api/jobs.api";
 
@@ -7,17 +8,11 @@ import JobCard from "../components/layout/JobCard";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import PageHeader from "../components/layout/PageHeader";
 import JobSearchBar from "../components/ui/JobSearchBar";
-
-import type { JobListing } from "../types/job.types";
-import { searchJobs } from "../utils/search/searchEngine";
-
 import JobFiltersSideBar from "../components/ui/JobFiltersSideBar";
 
-export default function JobListingsPage() {
-  const [jobs, setJobs] = useState<JobListing[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+import { searchJobs } from "../utils/search/searchEngine";
 
+export default function JobListingsPage() {
   const [filters, setFilters] = useState({
     keyword: "",
     location: [] as string[],
@@ -25,37 +20,13 @@ export default function JobListingsPage() {
     sort: "newest" as "newest" | "relevance",
   });
 
-  useEffect(() => {
-    let active = true;
+  // Clean data fetching with React Query (wrapped queryFn ensures proper typing)
+  const { data: jobs = [], isLoading, isError } = useQuery({
+    queryKey: ["jobs"],
+    queryFn: () => fetchJobs(),
+  });
 
-    const load = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const data = await fetchJobs();
-
-        if (active) {
-          setJobs(data);
-        }
-      } catch {
-        if (active) {
-          setError("Failed to load jobs");
-        }
-      } finally {
-        if (active) {
-          setLoading(false);
-        }
-      }
-    };
-
-    load();
-
-    return () => {
-      active = false;
-    };
-  }, []);
-
+  // Client-side filtering remain optimized
   const filteredJobs = useMemo(() => {
     return searchJobs(jobs, filters);
   }, [jobs, filters]);
@@ -64,7 +35,6 @@ export default function JobListingsPage() {
     setFilters((prev) => {
       const k = key as "location" | "department";
       const current = prev[k];
-
       const exists = current.includes(value);
 
       return {
@@ -93,7 +63,12 @@ export default function JobListingsPage() {
         />
 
         <JobSearchBar
+          // The key prop forces a clean remount when filters are reset,
+          // instantly clearing out the search bar inputs safely.
+          key={`${filters.keyword}-${filters.location[0] || ""}`}
           jobs={jobs}
+          initialKeyword={filters.keyword}
+          initialLocation={filters.location[0] || ""}
           onSearch={(p) =>
             setFilters((prev) => ({
               ...prev,
@@ -118,11 +93,11 @@ export default function JobListingsPage() {
 
         {/* LIST */}
         <main className="lg:col-span-9 space-y-4">
-          {loading ? (
+          {isLoading ? (
             <LoadingSpinner />
-          ) : error ? (
+          ) : isError ? (
             <p role="alert" className="text-error">
-              {error}
+              Failed to load jobs
             </p>
           ) : filteredJobs.length === 0 ? (
             <p className="text-slate-500">No jobs found</p>
