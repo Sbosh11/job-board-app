@@ -39,6 +39,12 @@
   color: var(--error-text);
 }
 
+.job-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
 /* Dropdown custom shadow matching design */
 .shadow-dropdown {
   box-shadow:
