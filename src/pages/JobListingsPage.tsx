@@ -1,5 +1,6 @@
-// Purpose: Page that fetches and displays a list of job postings.
-import { useMemo, useState } from "react";
+// Purpose: Page that fetches and displays a list of job postings using URL state.
+import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom"; // or your framework's router hook
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchJobs } from "../api/jobs.api";
@@ -13,49 +14,75 @@ import JobFiltersSideBar from "../components/ui/JobFiltersSideBar";
 import { searchJobs } from "../utils/search/searchEngine";
 
 export default function JobListingsPage() {
-  const [filters, setFilters] = useState({
-    keyword: "",
-    location: [] as string[],
-    department: [] as string[],
-    sort: "newest" as "newest" | "relevance",
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // 1. Derive filter state directly from the URL query parameters
+  const filters = useMemo(() => {
+    return {
+      keyword: searchParams.get("keyword") || "",
+      location: searchParams.getAll("location"), // support multiple if needed, or get()
+      department: searchParams.getAll("department"),
+      sort: (searchParams.get("sort") as "newest" | "relevance") || "newest",
+    };
+  }, [searchParams]);
+
+  // 2. React Query is now bound to the URL. If the URL changes, it fetches fresh data.
+  // Senior Pro-Tip: Pass filters to fetchJobs() to support backend filtering later!
+  const {
+    data: jobs = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["jobs", filters],
+    queryFn: () => fetchJobs(), // In production, this would be: fetchJobs(filters)
   });
 
-  // Clean data fetching with React Query (wrapped queryFn ensures proper typing)
-  const { data: jobs = [], isLoading, isError } = useQuery({
-    queryKey: ["jobs"],
-    queryFn: () => fetchJobs(),
-  });
-
-  // Client-side filtering remain optimized
+  // Client-side fallback fallback processing until backend search is active
   const filteredJobs = useMemo(() => {
     return searchJobs(jobs, filters);
   }, [jobs, filters]);
 
+  // 3. State updaters now simply update the URL string
   function setFilter(key: string, value: string) {
-    setFilters((prev) => {
-      const k = key as "location" | "department";
-      const current = prev[k];
-      const exists = current.includes(value);
+    const newParams = new URLSearchParams(searchParams);
 
-      return {
-        ...prev,
-        [k]: exists ? current.filter((v) => v !== value) : [...current, value],
-      };
-    });
+    if (key === "location" || key === "department") {
+      const currentValues = newParams.getAll(key);
+      if (currentValues.includes(value)) {
+        // Toggle off
+        const filtered = currentValues.filter((v) => v !== value);
+        newParams.delete(key);
+        filtered.forEach((v) => newParams.append(key, v));
+      } else {
+        // Toggle on
+        newParams.append(key, value);
+      }
+    } else {
+      newParams.set(key, value);
+    }
+    setSearchParams(newParams);
+  }
+
+  function handleSearchSubmit(p: { keyword: string; location: string }) {
+    const newParams = new URLSearchParams(searchParams);
+    if (p.keyword) newParams.set("keyword", p.keyword);
+    else newParams.delete("keyword");
+
+    if (p.location) {
+      newParams.delete("location");
+      newParams.append("location", p.location);
+    } else {
+      newParams.delete("location");
+    }
+    setSearchParams(newParams);
   }
 
   function reset() {
-    setFilters({
-      keyword: "",
-      location: [],
-      department: [],
-      sort: "newest",
-    });
+    setSearchParams(new URLSearchParams()); // Wipes the URL clean back to default
   }
 
   return (
     <div className="space-y-6 w-full max-w-7xl mx-auto px-4">
-      {/* HEADER */}
       <div className="space-y-4">
         <PageHeader
           title="Find Your Next Job"
@@ -63,25 +90,15 @@ export default function JobListingsPage() {
         />
 
         <JobSearchBar
-          // The key prop forces a clean remount when filters are reset,
-          // instantly clearing out the search bar inputs safely.
-          key={`${filters.keyword}-${filters.location[0] || ""}`}
           jobs={jobs}
-          initialKeyword={filters.keyword}
-          initialLocation={filters.location[0] || ""}
-          onSearch={(p) =>
-            setFilters((prev) => ({
-              ...prev,
-              keyword: p.keyword,
-              location: p.location ? [p.location] : [],
-            }))
-          }
+          // Pass the plain string values directly from our derived URL filters object
+          keywordValue={filters.keyword}
+          locationValue={filters.location[0] || ""}
+          onSearch={handleSearchSubmit}
         />
       </div>
 
-      {/* MAIN LAYOUT */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* SIDEBAR */}
         <aside className="lg:col-span-3">
           <JobFiltersSideBar
             jobs={jobs}
@@ -91,7 +108,6 @@ export default function JobListingsPage() {
           />
         </aside>
 
-        {/* LIST */}
         <main className="lg:col-span-9 space-y-4">
           {isLoading ? (
             <LoadingSpinner />

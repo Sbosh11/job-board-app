@@ -12,5 +12,7 @@ export interface JobListing {
 
 export interface JobSearchParams {
   keyword?: string;
-  location?: string;
+  location?: string[];
+  department?: string[];
+  sort?: "newest" | "relevance";
 }

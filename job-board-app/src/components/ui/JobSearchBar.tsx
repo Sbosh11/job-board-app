@@ -92,14 +92,14 @@ export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
           <Search className="h-5 w-5 text-slate-400" aria-hidden="true" />
 
           <label htmlFor="keyword-search" className="sr-only">
-            Job title
+            Job title or department
           </label>
           <input
             id="keyword-search"
             name="keyword"
             type="text"
-            placeholder="Job title"
-            aria-label="Job title"
+            placeholder="Job title or department"
+            aria-label="Job title or department"
             aria-expanded={showKeywordDropdown}
             aria-controls="keyword-dropdown"
             value={keyword}
