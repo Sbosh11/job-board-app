@@ -109,7 +109,7 @@ export default function JobApplicationPage() {
               <button
                 type="button"
                 onClick={() => navigate(`/jobs/${id}`)}
-                className="px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white transition"
+                className="px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition"
               >
                 Back to Job
               </button>
@@ -117,7 +117,7 @@ export default function JobApplicationPage() {
               <button
                 type="button"
                 onClick={() => navigate("/")}
-                className="px-6 py-2 bg-slate-200 text-slate-700 rounded-full font-medium hover:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white transition"
+                className="px-6 py-2 bg-slate-200 text-slate-700 rounded-full font-medium hover:bg-slate-300 transition"
               >
                 Browse Jobs
               </button>
@@ -137,7 +137,6 @@ export default function JobApplicationPage() {
         onSubmit={handleSubmit(submitHandler)}
         className="max-w-2xl mx-auto bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden"
         noValidate
-        aria-label="Job application form"
       >
         {/* Header */}
         <div className="px-6 py-5 border-b bg-slate-50 flex items-start justify-between">
@@ -172,55 +171,30 @@ export default function JobApplicationPage() {
               type="text"
               tabIndex={-1}
               autoComplete="off"
-              aria-hidden="true"
               {...register("website")}
             />
           </div>
 
           {/* Full Name */}
           <div className="space-y-1">
-            <label htmlFor="fullName" className="text-sm font-medium">
-              Full Name *
-            </label>
+            <label className="text-sm font-medium">Full Name *</label>
             <input
-              id="fullName"
-              type="text"
-              autoComplete="name"
-              required
-              aria-required="true"
               className={formFieldClass}
-              aria-invalid={errors.fullName ? "true" : "false"}
-              aria-describedby={errors.fullName ? "fullName-error" : undefined}
               {...register("fullName", {
                 required: "Full name is required",
                 minLength: { value: 2, message: "Too short" },
               })}
             />
             {errors.fullName && (
-              <p
-                id="fullName-error"
-                role="alert"
-                className="text-sm text-error"
-              >
-                {errors.fullName.message}
-              </p>
+              <p className="text-sm text-error">{errors.fullName.message}</p>
             )}
           </div>
 
           {/* Email */}
           <div className="space-y-1">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email *
-            </label>
+            <label className="text-sm font-medium">Email *</label>
             <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              required
-              aria-required="true"
               className={formFieldClass}
-              aria-invalid={errors.email ? "true" : "false"}
-              aria-describedby={errors.email ? "email-error" : undefined}
               {...register("email", {
                 required: "Email is required",
                 pattern: {
@@ -230,33 +204,20 @@ export default function JobApplicationPage() {
               })}
             />
             {errors.email && (
-              <p id="email-error" role="alert" className="text-sm text-error">
-                {errors.email.message}
-              </p>
+              <p className="text-sm text-error">{errors.email.message}</p>
             )}
           </div>
 
           {/* Phone */}
           <div className="space-y-1">
-            <label htmlFor="phone" className="text-sm font-medium">
-              Phone
-            </label>
-            <input
-              id="phone"
-              type="tel"
-              autoComplete="tel"
-              className={formFieldClass}
-              {...register("phone")}
-            />
+            <label className="text-sm font-medium">Phone</label>
+            <input className={formFieldClass} {...register("phone")} />
           </div>
 
           {/* Cover Letter */}
           <div className="space-y-1">
-            <label htmlFor="coverLetter" className="text-sm font-medium">
-              Cover Letter
-            </label>
+            <label className="text-sm font-medium">Cover Letter</label>
             <textarea
-              id="coverLetter"
               rows={5}
               className={formFieldClass}
               {...register("coverLetter")}
@@ -264,11 +225,7 @@ export default function JobApplicationPage() {
           </div>
 
           {submitError && (
-            <div
-              role="alert"
-              aria-live="assertive"
-              className="text-sm text-error bg-red-50 border border-red-200 p-3 rounded-lg"
-            >
+            <div className="text-sm text-error bg-red-50 border border-red-200 p-3 rounded-lg">
               {submitError}
             </div>
           )}
@@ -277,7 +234,7 @@ export default function JobApplicationPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-blue-600 text-white py-3 px-10 rounded-full font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-60"
+              className="bg-blue-600 text-white py-3 px-10 rounded-full font-medium hover:bg-blue-700 disabled:opacity-60"
             >
               {isSubmitting ? "Submitting..." : "Submit Application"}
             </button>
