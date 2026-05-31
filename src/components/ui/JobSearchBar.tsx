@@ -15,11 +15,18 @@ import { getHistory, saveHistory } from "../../utils/search/history";
 interface JobSearchBarProps {
   onSearch: (params: { keyword: string; location: string }) => void;
   jobs: JobListing[];
+  initialKeyword?: string;
+  initialLocation?: string;
 }
 
-export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
+export default function JobSearchBar({
+  onSearch,
+  jobs,
+  initialKeyword = "",
+  initialLocation = "",
+}: JobSearchBarProps) {
+  const [keyword, setKeyword] = useState(initialKeyword);
+  const [location, setLocation] = useState(initialLocation);
 
   const [keywordSuggestions, setKeywordSuggestions] = useState<string[]>([]);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);

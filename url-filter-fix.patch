@@ -1,0 +1,171 @@
+diff --git a/src/components/ui/JobSearchBar.tsx b/src/components/ui/JobSearchBar.tsx
+index f9addc4..135efff 100644
+--- a/src/components/ui/JobSearchBar.tsx
++++ b/src/components/ui/JobSearchBar.tsx
+@@ -15,11 +15,18 @@ import { getHistory, saveHistory } from "../../utils/search/history";
+ interface JobSearchBarProps {
+   onSearch: (params: { keyword: string; location: string }) => void;
+   jobs: JobListing[];
++  initialKeyword?: string;
++  initialLocation?: string;
+ }
+ 
+-export default function JobSearchBar({ onSearch, jobs }: JobSearchBarProps) {
+-  const [keyword, setKeyword] = useState("");
+-  const [location, setLocation] = useState("");
++export default function JobSearchBar({
++  onSearch,
++  jobs,
++  initialKeyword = "",
++  initialLocation = "",
++}: JobSearchBarProps) {
++  const [keyword, setKeyword] = useState(initialKeyword);
++  const [location, setLocation] = useState(initialLocation);
+ 
+   const [keywordSuggestions, setKeywordSuggestions] = useState<string[]>([]);
+   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
+diff --git a/src/pages/JobListingsPage.tsx b/src/pages/JobListingsPage.tsx
+index e3e081c..5b057fa 100644
+--- a/src/pages/JobListingsPage.tsx
++++ b/src/pages/JobListingsPage.tsx
+@@ -1,5 +1,6 @@
+ // Purpose: Page that fetches and displays a list of job postings.
+ import { useEffect, useMemo, useState } from "react";
++import { useSearchParams } from "react-router-dom";
+ 
+ import { fetchJobs } from "../api/jobs.api";
+ 
+@@ -13,17 +14,61 @@ import { searchJobs } from "../utils/search/searchEngine";
+ 
+ import JobFiltersSideBar from "../components/ui/JobFiltersSideBar";
+ 
++type SortOption = "newest" | "relevance";
++
++type ListingFilters = {
++  keyword: string;
++  location: string[];
++  department: string[];
++  sort: SortOption;
++};
++
++function getSort(value: string | null): SortOption {
++  return value === "relevance" ? "relevance" : "newest";
++}
++
+ export default function JobListingsPage() {
+   const [jobs, setJobs] = useState<JobListing[]>([]);
+   const [loading, setLoading] = useState<boolean>(true);
+   const [error, setError] = useState<string | null>(null);
++  const [searchParams, setSearchParams] = useSearchParams();
++
++  const filters = useMemo<ListingFilters>(
++    () => ({
++      keyword: searchParams.get("keyword") || "",
++      location: searchParams.getAll("location"),
++      department: searchParams.getAll("department"),
++      sort: getSort(searchParams.get("sort")),
++    }),
++    [searchParams],
++  );
++
++  function updateFilters(nextFilters: ListingFilters) {
++    const params = new URLSearchParams();
++    const keyword = nextFilters.keyword.trim();
++
++    if (keyword) {
++      params.set("keyword", keyword);
++    }
++
++    nextFilters.location.forEach((location) => {
++      if (location.trim()) {
++        params.append("location", location);
++      }
++    });
+ 
+-  const [filters, setFilters] = useState({
+-    keyword: "",
+-    location: [] as string[],
+-    department: [] as string[],
+-    sort: "newest" as "newest" | "relevance",
+-  });
++    nextFilters.department.forEach((department) => {
++      if (department.trim()) {
++        params.append("department", department);
++      }
++    });
++
++    if (nextFilters.sort !== "newest") {
++      params.set("sort", nextFilters.sort);
++    }
++
++    setSearchParams(params);
++  }
+ 
+   useEffect(() => {
+     let active = true;
+@@ -61,26 +106,29 @@ export default function JobListingsPage() {
+   }, [jobs, filters]);
+ 
+   function setFilter(key: string, value: string) {
+-    setFilters((prev) => {
+-      const k = key as "location" | "department";
+-      const current = prev[k];
+-
+-      const exists = current.includes(value);
+-
+-      return {
+-        ...prev,
+-        [k]: exists ? current.filter((v) => v !== value) : [...current, value],
+-      };
++    const filterKey = key as "location" | "department";
++
++    if (value === "__clear") {
++      updateFilters({
++        ...filters,
++        [filterKey]: [],
++      });
++      return;
++    }
++
++    const current = filters[filterKey];
++    const exists = current.includes(value);
++
++    updateFilters({
++      ...filters,
++      [filterKey]: exists
++        ? current.filter((currentValue) => currentValue !== value)
++        : [...current, value],
+     });
+   }
+ 
+   function reset() {
+-    setFilters({
+-      keyword: "",
+-      location: [],
+-      department: [],
+-      sort: "newest",
+-    });
++    setSearchParams({});
+   }
+ 
+   return (
+@@ -93,13 +141,16 @@ export default function JobListingsPage() {
+         />
+ 
+         <JobSearchBar
++          key={`${filters.keyword}:${filters.location[0] || ""}`}
+           jobs={jobs}
++          initialKeyword={filters.keyword}
++          initialLocation={filters.location[0] || ""}
+           onSearch={(p) =>
+-            setFilters((prev) => ({
+-              ...prev,
++            updateFilters({
++              ...filters,
+               keyword: p.keyword,
+               location: p.location ? [p.location] : [],
+-            }))
++            })
+           }
+         />
+       </div>
